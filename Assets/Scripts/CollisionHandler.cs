@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class CollisionHandler : MonoBehaviour
 {
 
@@ -8,13 +9,18 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] AudioClip Success;
     [SerializeField] AudioClip Death;
 
+    [SerializeField] ParticleSystem successParticles;
+    [SerializeField] ParticleSystem deathParticles;
+
     AudioSource audioSource;
+    
 
     bool isTransitioning = false;
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        
     }
 
     void OnCollisionEnter(Collision other)
@@ -41,10 +47,11 @@ public class CollisionHandler : MonoBehaviour
 
     void StartCrashSequence()
     {
-        // todo add particle effect on crash
+        deathParticles.Play();
         isTransitioning = true;
         audioSource.Stop();
         GetComponent<Movement>().enabled = false;
+        
         if (!audioSource.isPlaying)
         {
             audioSource.PlayOneShot(Death);
@@ -55,7 +62,7 @@ public class CollisionHandler : MonoBehaviour
     void StartSuccessSequence() 
     {
 
-        // todo add particle effect on crash
+        successParticles.Play();
         isTransitioning = true;
         audioSource.Stop();
         GetComponent<Movement>().enabled = false;
@@ -63,6 +70,7 @@ public class CollisionHandler : MonoBehaviour
         {
         audioSource.PlayOneShot(Success);
         }
+        
         Invoke("NextLevel", delay);
     }
 
