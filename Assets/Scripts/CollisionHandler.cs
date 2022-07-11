@@ -11,6 +11,7 @@ public class CollisionHandler : MonoBehaviour
 
     [SerializeField] ParticleSystem successParticles;
     [SerializeField] ParticleSystem deathParticles;
+    
 
     AudioSource audioSource;
     
